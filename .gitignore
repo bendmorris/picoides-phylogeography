@@ -1,0 +1,9 @@
+*.pyc
+*.aln
+*.phy
+*.newick
+*.png
+*.csv
+RAxML_*
+*.reduced
+*.pkl
