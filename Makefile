@@ -1,4 +1,4 @@
-all: data/picoides_geo.newick figures/sample_map.png
+all: data/picoides_geo.newick figures/sample_map.png figures/cluster_map.png
 
 
 data/picoides_nd2_geo.fasta data/accessions.pkl: data/picoides_villosus_nd2.fasta get_sample_locations.py
@@ -24,3 +24,10 @@ data/samples.csv: make_csv.py data/accessions.pkl
 figures/sample_map.png: map_samples.py data/samples.csv
 	mkdir -p figures; \
 	python map_samples.py figures/sample_map.png
+
+data/clusters.pkl: find_clusters.py data/picoides_geo.newick
+	python find_clusters.py
+
+figures/cluster_map.png: map_clusters.py data/clusters.pkl
+	mkdir -p figures; \
+	python map_clusters.py figures/cluster_map.png

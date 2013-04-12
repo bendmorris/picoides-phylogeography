@@ -2,25 +2,36 @@
 import os
 import urllib
 import cPickle as pickle
-try: latlons = pickle.load(open('latlons.pkl'))
+import json
+import time
+
+last_read = time.time()
+
+try:
+    with open('latlons.pkl') as pkl_file:
+        latlons = pickle.load(pkl_file)
 except: latlons = {}
 
 
 
 def save_lat_lons():
-    f = open("latlons.py", "w")
-    f.write("latlons = %s" % latlons)
-    f.close()
+    with open('latlons.pkl', 'w') as pkl_file:
+        pickle.dump(latlons, pkl_file, -1)
 
 
-def get_lat_lon(location):
+def get_lat_lon(location, throttle=1):
+    while time.time() - last_read < throttle:
+        pass
+    
     if location in latlons.keys():
         return latlons[location]
-    true = True
-    false = False
+
     try:
         url = "http://maps.google.com/maps/api/geocode/json?address=%s&sensor=false" % location.replace(' ', '+')
-        data = eval(urllib.urlopen(url).read())
+        data = json.loads(urllib.urlopen(url).read())
+        if data['status'] == 'OVER_QUERY_LIMIT':
+            raise Exception('Google Maps API query limit exceeded. (Use the throttle keyword to control the request rate.')
+            
         try:
             bounds = data['results'][0]['geometry']['bounds']
             result1 = bounds['northeast']
@@ -37,5 +48,7 @@ def get_lat_lon(location):
         latlons[location] = (lat1, lon1, lat2, lon2)
         save_lat_lons()
         return (lat1, lon1, lat2, lon2)
+        
     except Exception as e:
+        raise
         return None

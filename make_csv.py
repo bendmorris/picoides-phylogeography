@@ -27,7 +27,13 @@ with open('data/samples.csv', 'w') as output_file:
         row = (accession, species, location)
         try:
             lat1, lon1, lat2, lon2 = get_lat_lon(location)
-        except: continue
+        except IndexError: 
+            print location
+            continue
+        except Exception as e:
+            print location
+            raise
+            
         lat = round((lat1+lat2)/2, 2)
         lon = round((lon1+lon2)/2, 2)
         
