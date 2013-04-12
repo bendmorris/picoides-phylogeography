@@ -8,7 +8,7 @@ import csv
 
 
 xs, ys, zs = [], [], []
-with open('samples.csv') as input_file:
+with open('data/samples.csv') as input_file:
     reader = csv.reader(input_file)
     next(reader)
     for line in reader:

@@ -14,7 +14,7 @@ replace = {
 
 accessions = {}
 skip = False
-with open('picoides_villosus_nd2.fasta') as input_file:
+with open('data/picoides_villosus_nd2.fasta') as input_file:
     for line in input_file:
         line = line.strip()
         
@@ -42,5 +42,5 @@ with open('picoides_villosus_nd2.fasta') as input_file:
         
         if not skip: print line
 
-with open('accessions.pkl', 'w') as pkl_file:
+with open('data/accessions.pkl', 'w') as pkl_file:
     pkl.dump(accessions, pkl_file, -1)

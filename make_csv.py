@@ -2,7 +2,7 @@ from get_location import get_lat_lon
 import csv
 import cPickle as pkl
 import scipy.stats as s
-with open('accessions.pkl') as pkl_file:
+with open('data/accessions.pkl') as pkl_file:
     accessions = pkl.load(pkl_file)
     
 body_size_data = [
@@ -17,7 +17,7 @@ lats, means, sds = [[p[n] for p in body_size_data] for n in range(3)]
 mean_m, mean_b, r, p, se = s.linregress(lats, means)
 sd_m, sd_b, r, p, se = s.linregress(lats, sds)
     
-with open('samples.csv', 'w') as output_file:
+with open('data/samples.csv', 'w') as output_file:
     writer = csv.writer(output_file)
     writer.writerow(('id','species','location','lat','lon','body_size'))
     for key, value in accessions.items():

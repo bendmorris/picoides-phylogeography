@@ -1,9 +1,9 @@
 import Bio.Phylo as bp
 import cPickle as pkl
-with open('accessions.pkl') as pkl_file:
+with open('data/accessions.pkl') as pkl_file:
     accessions = pkl.load(pkl_file)
 
-tree = bp.read('picoides_geo.newick','newick')
+tree = bp.read('data/picoides_geo.newick','newick')
 tree.root_at_midpoint()
 for terminal in tree.get_terminals():
     if terminal.name in accessions:
