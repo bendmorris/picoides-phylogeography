@@ -1,7 +1,7 @@
 import sys
 import Bio.Phylo as bp
 import cPickle as pkl
-with open('accessions.pkl') as pkl_file:
+with open('data/accessions.pkl') as pkl_file:
     accessions = pkl.load(pkl_file)
     
 input_file = sys.argv[1]
