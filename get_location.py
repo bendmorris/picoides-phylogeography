@@ -19,12 +19,15 @@ def save_lat_lons():
         pickle.dump(latlons, pkl_file, -1)
 
 
-def get_lat_lon(location, throttle=1):
-    while time.time() - last_read < throttle:
-        pass
-    
+def get_lat_lon(location, throttle=0.5):
+    global last_read
+
     if location in latlons.keys():
         return latlons[location]
+
+    while time.time() - last_read < throttle:
+        pass
+    last_read = time.time()
 
     try:
         url = "http://maps.google.com/maps/api/geocode/json?address=%s&sensor=false" % location.replace(' ', '+')
